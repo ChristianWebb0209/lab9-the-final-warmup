@@ -43,11 +43,12 @@ export class TodoForm extends LitElement {
     return html`
       <form @submit=${this.handleSubmit}>
         <input
+          class="edit-input"
           type="text"
-          placeholder="What needs to be done?"
+          placeholder="What jungle challenge awaits?"
           .value=${this.inputValue}
           @input=${this.handleInput}
-          aria-label="New todo"
+          aria-label="New jungle task"
           autofocus
         />
         <button type="submit" ?disabled=${!this.inputValue.trim()}>

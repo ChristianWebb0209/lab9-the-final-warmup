@@ -60,13 +60,13 @@ export class TodoApp extends LitElement {
   }
 
   handleClearCompleted() {
-    if (confirm('Clear all completed todos?')) {
+    if (confirm('Clear all conquered jungle tasks?')) {
       this.model.clearCompleted();
     }
   }
 
   handleClearAll() {
-    if (confirm('Clear ALL todos? This cannot be undone.')) {
+    if (confirm('Abandon ALL jungle tasks? This expedition cannot be undone.')) {
       this.model.clearAll();
     }
   }
@@ -74,8 +74,8 @@ export class TodoApp extends LitElement {
   render() {
     return html`
       <div class="app-container">
-        <h1>My Tasks</h1>
-        <p class="subtitle">Stay organized and productive</p>
+        <h1>Jungle Task Tracker</h1>
+        <p class="subtitle">Don't let your tasks go bananas!</p>
 
         <div class="stats">
           <div class="stat-item">
@@ -108,18 +108,18 @@ export class TodoApp extends LitElement {
             class="clear-completed"
             @click=${this.handleClearCompleted}
             ?disabled=${this.model.completedCount === 0}>
-            Clear Completed
+            Clear Conquered Tasks
           </button>
           <button
             class="clear-all"
             @click=${this.handleClearAll}
             ?disabled=${this.todos.length === 0}>
-            Clear All
+            Abandon Expedition
           </button>
         </div>
 
         <div class="footer">
-          Lab 9: The final battle!
+          Lab 9: The final expedition!
         </div>
       </div>
     `;

@@ -22,8 +22,8 @@ export class TodoList extends LitElement {
     if (this.todos.length === 0) {
       return html`
         <div class="empty-state">
-          <div class="empty-icon">📝</div>
-          <p>No todos yet. Add one above!</p>
+          <div class="empty-icon">🌿</div>
+          <p>No jungle tasks yet. Add one above!</p>
         </div>
       `;
     }

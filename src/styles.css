@@ -2,30 +2,38 @@
 
 
 :root {
-  --primary-color: #667eea;
-  --primary-hover: #5568d3;
-  --secondary-color: #764ba2;
-  --success-color: #4CAF50;
-  --success-hover: #45a049;
-  --warning-color: #ff9800;
-  --warning-hover: #f57c00;
-  --danger-color: #f44336;
-  --danger-hover: #da190b;
-  --info-color: #2196F3;
-  --info-hover: #0b7dda;
-  --gray-color: #757575;
-  --gray-hover: #616161;
-  --light-gray: #ccc;
-  --border-color: #e0e0e0;
-  --text-primary: #333;
-  --text-secondary: #666;
-  --text-muted: #999;
-  --bg-light: #f5f5f5;
-  --bg-white: white;
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.2);
-  --border-radius: 8px;
-  --transition: 0.2s;
+  --primary-color: #2d5016;
+  --primary-hover: #3d6820;
+  --secondary-color: #8b4513;
+  --success-color: #8b7355;
+  --success-hover: #6b5b47;
+  --warning-color: #a0522d;
+  --warning-hover: #8b4513;
+  --danger-color: #8b7355;
+  --danger-hover: #6b5b47;
+  --info-color: #8b7355;
+  --info-hover: #6b5b47;
+  --gray-color: #8b7355;
+  --gray-hover: #6b5b47;
+  --light-gray: #deb887;
+  --border-color: #d2b48c;
+  --text-primary: #0f2410;
+  --text-secondary: #4a5d23;
+  --text-muted: #a0522d;
+  --bg-light: #e8e0d0;
+  --bg-white: #d4c9b5;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.5);
+  --border-radius: 12px;
+  --transition: 0.3s;
+  --scrollbar-color-rgb: 139, 115, 85;
+}
+
+@font-face {
+  font-family: 'Tribeca';
+  src: url('./assets/Tribeca.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 * {
@@ -34,9 +42,14 @@
   padding: 0;
 }
 
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  font-family: 'Tribeca', sans-serif;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.1)),
+    url('./assets/pattern.jpeg');
+  background-repeat: repeat;
+  box-shadow: inset 0 0 300px rgba(0, 0, 0, 0.7);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -46,7 +59,7 @@ body {
 
 main {
   width: 100%;
-  max-width: 600px;
+  max-width: 55vw;
 }
 
 /* general stylings  */
@@ -71,7 +84,9 @@ main {
   border-radius: 16px;
   box-shadow: var(--shadow-md);
   padding: 32px;
-  min-height: 400px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h1 {
@@ -79,12 +94,14 @@ h1 {
   color: var(--text-primary);
   font-size: 32px;
   font-weight: 700;
+  text-align: center;
 }
 
 .subtitle {
   color: var(--text-secondary);
   margin-bottom: 24px;
   font-size: 14px;
+  text-align: center;
 }
 
 .stats {
@@ -193,7 +210,7 @@ form input:focus {
 
 form button {
   padding: 12px 24px;
-  background: var(--primary-color);
+  background: var(--secondary-color);
   color: var(--bg-white);
   border: none;
   border-radius: var(--border-radius);
@@ -204,7 +221,7 @@ form button {
 }
 
 form button:hover {
-  background: var(--primary-hover);
+  background: var(--gray-hover);
 }
 
 form button:active {
@@ -221,6 +238,13 @@ form button:disabled {
   display: block;
 }
 
+todo-list {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
 .empty-state {
   text-align: center;
   padding: 40px 20px;
@@ -234,7 +258,8 @@ form button:disabled {
 }
 
 .list-container {
-  max-height: 500px;
+  flex: 1;
+  min-height: 0;
   overflow-y: auto;
 }
 
@@ -244,17 +269,17 @@ form button:disabled {
 }
 
 .list-container::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  background: rgba(var(--scrollbar-color-rgb), 0.1);
+  border-radius: 6px;
 }
 
 .list-container::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
+  background: rgba(var(--scrollbar-color-rgb), 0.3);
+  border-radius: 6px;
 }
 
 .list-container::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(var(--scrollbar-color-rgb), 0.5);
 }
 
 /* todo-item stylings */
@@ -271,23 +296,29 @@ form button:disabled {
   background: var(--bg-white);
   border-radius: var(--border-radius);
   margin-bottom: 8px;
-  transition: transform var(--transition), box-shadow var(--transition);
+  transition: box-shadow var(--transition), background-color var(--transition), border-color var(--transition), transform var(--transition);
+  cursor: pointer;
 }
 
 .todo-item:hover {
-  transform: translateX(4px);
   box-shadow: var(--shadow-sm);
 }
 
+.todo-item.completed,
+.todo-item[data-completed="true"] {
+  background: rgba(15, 36, 16, 0.6);
+  border: 2px solid rgba(15, 36, 16, 0.8);
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  transform: translateY(1px);
+}
+
 .checkbox {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
+  display: none;
 }
 
 .todo-text {
   flex: 1;
-  font-size: 16px;
+  font-size: 20px;
   color: var(--text-primary);
   word-break: break-word;
 }
@@ -295,15 +326,23 @@ form button:disabled {
 .todo-text.completed {
   text-decoration: line-through;
   color: var(--text-muted);
+  font-weight: 500;
+}
+
+.todo-item.completed .todo-text {
+  color: var(--text-muted);
+  text-decoration: line-through;
 }
 
 .edit-input {
+  font-family: 'Tribeca', sans-serif;
   flex: 1;
-  padding: 8px;
-  font-size: 16px;
+  padding: 10px;
+  font-size: 20px;
   border: 2px solid var(--primary-color);
   border-radius: 4px;
   outline: none;
+  background: rgba(212, 201, 181, 0.6);
 }
 
 .button-group {
@@ -312,46 +351,46 @@ form button:disabled {
 }
 
 .button-group button {
-  padding: 6px 12px;
+  padding: 10px 18px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   transition: background var(--transition);
 }
 
 .edit-btn {
-  background: var(--success-color);
+  background: #7a8b5a;
   color: var(--bg-white);
 }
 
 .edit-btn:hover {
-  background: var(--success-hover);
+  background: #6a7a4a;
 }
 
 .delete-btn {
-  background: var(--danger-color);
+  background: #9d6b47;
   color: var(--bg-white);
 }
 
 .delete-btn:hover {
-  background: var(--danger-hover);
+  background: #8d5b37;
 }
 
 .save-btn {
-  background: var(--info-color);
+  background: #6b8b5a;
   color: var(--bg-white);
 }
 
 .save-btn:hover {
-  background: var(--info-hover);
+  background: #5b7b4a;
 }
 
 .cancel-btn {
-  background: var(--gray-color);
+  background: #8b7a5a;
   color: var(--bg-white);
 }
 
 .cancel-btn:hover {
-  background: var(--gray-hover);
+  background: #7b6a4a;
 }
