@@ -7,6 +7,7 @@ import styles from '../styles.css?raw';
 export class TodoItem extends LitElement {
   static properties = {
     todo: { type: Object },
+    completed: { type: Boolean, state: true },
     isEditing: { state: true },
     editValue: { state: true }
   };
@@ -34,9 +35,10 @@ export class TodoItem extends LitElement {
   /**
    * Calls delete-todo custom event
    */
-  handleDelete() {
+  handleDelete(e) {
     if (!this.todo) return;
-    if (confirm('Delete this todo?')) {
+    e.stopPropagation();
+    if (confirm('Remove this jungle task from your expedition?')) {
       this.dispatchEvent(new CustomEvent('delete-todo', {
         detail: { id: this.todo.id },
         bubbles: true,
@@ -45,8 +47,9 @@ export class TodoItem extends LitElement {
     }
   }
 
-  handleEdit() {
+  handleEdit(e) {
     if (!this.todo) return;
+    e.stopPropagation();
     this.isEditing = true;
     this.editValue = this.todo.text;
   }
@@ -106,29 +109,35 @@ export class TodoItem extends LitElement {
     }
 
     return html`
-      <div class="todo-item">
-        <input
-          type="checkbox"
-          class="checkbox"
-          .checked=${this.todo?.completed || false}
-          @change=${this.handleToggle}
-          aria-label="Toggle todo"
-        />
-        <span class="todo-text ${this.todo?.completed ? 'completed' : ''}">
+      <div 
+        class="todo-item ${this.completed ? 'completed' : ''}"
+        ?data-completed=${this.completed}
+        @click=${this.handleToggle}
+        role="button"
+        tabindex="0"
+        aria-label="Mark jungle task as conquered"
+        @keydown=${(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          this.handleToggle(e);
+        }
+      }}
+      >
+        <span class="todo-text ${this.completed ? 'completed' : ''}">
           ${this.todo?.text || ''}
         </span>
         <div class="button-group">
           <button
             class="edit-btn"
             @click=${this.handleEdit}
-            ?disabled=${this.todo?.completed}
-            aria-label="Edit todo">
+            ?disabled=${this.completed}
+            aria-label="Edit jungle todo">
             Edit
           </button>
           <button
             class="delete-btn"
             @click=${this.handleDelete}
-            aria-label="Delete todo">
+            aria-label="Delete jungletodo">
             Delete
           </button>
         </div>
