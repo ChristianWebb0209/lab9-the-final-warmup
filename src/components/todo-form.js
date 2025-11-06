@@ -1,4 +1,5 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
+import styles from '../styles.css?raw';
 
 /**
  * TodoForm - Input form for adding new todos
@@ -8,56 +9,7 @@ export class TodoForm extends LitElement {
     inputValue: { state: true }
   };
 
-  static styles = css`
-    :host {
-      display: block;
-      margin-bottom: 20px;
-    }
-
-    form {
-      display: flex;
-      gap: 8px;
-    }
-
-    input {
-      flex: 1;
-      padding: 12px 16px;
-      font-size: 16px;
-      border: 2px solid #e0e0e0;
-      border-radius: 8px;
-      outline: none;
-      transition: border-color 0.3s;
-    }
-
-    input:focus {
-      border-color: #667eea;
-    }
-
-    button {
-      padding: 12px 24px;
-      background: #667eea;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #5568d3;
-    }
-
-    button:active {
-      transform: translateY(1px);
-    }
-
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-  `;
+  static styles = unsafeCSS(styles);
 
   constructor() {
     super();

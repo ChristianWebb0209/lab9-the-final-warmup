@@ -1,4 +1,32 @@
-/* no CSS variables!?! */
+/* global styling variables */
+
+
+:root {
+  --primary-color: #667eea;
+  --primary-hover: #5568d3;
+  --secondary-color: #764ba2;
+  --success-color: #4CAF50;
+  --success-hover: #45a049;
+  --warning-color: #ff9800;
+  --warning-hover: #f57c00;
+  --danger-color: #f44336;
+  --danger-hover: #da190b;
+  --info-color: #2196F3;
+  --info-hover: #0b7dda;
+  --gray-color: #757575;
+  --gray-hover: #616161;
+  --light-gray: #ccc;
+  --border-color: #e0e0e0;
+  --text-primary: #333;
+  --text-secondary: #666;
+  --text-muted: #999;
+  --bg-light: #f5f5f5;
+  --bg-white: white;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 10px 40px rgba(0, 0, 0, 0.2);
+  --border-radius: 8px;
+  --transition: 0.2s;
+}
 
 * {
   box-sizing: border-box;
@@ -8,7 +36,7 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -21,7 +49,7 @@ main {
   max-width: 600px;
 }
 
-/* Utility classes */
+/* general stylings  */
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -32,4 +60,298 @@ main {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+:host {
+  display: block;
+}
+
+.app-container {
+  background: var(--bg-white);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  padding: 32px;
+  min-height: 400px;
+}
+
+h1 {
+  margin: 0 0 8px 0;
+  color: var(--text-primary);
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: var(--bg-light);
+  border-radius: var(--border-radius);
+  margin-bottom: 20px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.actions button {
+  flex: 1;
+  padding: 10px 16px;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.clear-completed {
+  background: var(--warning-color);
+  color: var(--bg-white);
+}
+
+.clear-completed:hover {
+  background: var(--warning-hover);
+}
+
+.clear-all {
+  background: var(--danger-color);
+  color: var(--bg-white);
+}
+
+.clear-all:hover {
+  background: var(--danger-hover);
+}
+
+.actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.footer {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+
+/* form styling */
+
+:host {
+  display: block;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  gap: 8px;
+}
+
+form input {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius);
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+form input:focus {
+  border-color: var(--primary-color);
+}
+
+form button {
+  padding: 12px 24px;
+  background: var(--primary-color);
+  color: var(--bg-white);
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+form button:hover {
+  background: var(--primary-hover);
+}
+
+form button:active {
+  transform: translateY(1px);
+}
+
+form button:disabled {
+  background: var(--light-gray);
+  cursor: not-allowed;
+}
+
+/* comopnent styles */
+:host {
+  display: block;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--bg-white);
+  font-size: 18px;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.list-container {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* list-container stylings */
+.list-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.list-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* todo-item stylings */
+
+:host {
+  display: block;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg-white);
+  border-radius: var(--border-radius);
+  margin-bottom: 8px;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+
+.todo-item:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-sm);
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.todo-text {
+  flex: 1;
+  font-size: 16px;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.todo-text.completed {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.edit-input {
+  flex: 1;
+  padding: 8px;
+  font-size: 16px;
+  border: 2px solid var(--primary-color);
+  border-radius: 4px;
+  outline: none;
+}
+
+.button-group {
+  display: flex;
+  gap: 8px;
+}
+
+.button-group button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background var(--transition);
+}
+
+.edit-btn {
+  background: var(--success-color);
+  color: var(--bg-white);
+}
+
+.edit-btn:hover {
+  background: var(--success-hover);
+}
+
+.delete-btn {
+  background: var(--danger-color);
+  color: var(--bg-white);
+}
+
+.delete-btn:hover {
+  background: var(--danger-hover);
+}
+
+.save-btn {
+  background: var(--info-color);
+  color: var(--bg-white);
+}
+
+.save-btn:hover {
+  background: var(--info-hover);
+}
+
+.cancel-btn {
+  background: var(--gray-color);
+  color: var(--bg-white);
+}
+
+.cancel-btn:hover {
+  background: var(--gray-hover);
 }

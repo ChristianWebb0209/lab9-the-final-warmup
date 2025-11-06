@@ -1,4 +1,5 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
+import styles from '../styles.css?raw';
 
 /**
  * TodoItem - Individual todo item component
@@ -10,104 +11,7 @@ export class TodoItem extends LitElement {
     editValue: { state: true }
   };
 
-  static styles = css`
-    :host {
-      display: block;
-    }
-
-    .todo-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 16px;
-      background: white;
-      border-radius: 8px;
-      margin-bottom: 8px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .todo-item:hover {
-      transform: translateX(4px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .checkbox {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
-
-    .todo-text {
-      flex: 1;
-      font-size: 16px;
-      color: #333;
-      word-break: break-word;
-    }
-
-    .todo-text.completed {
-      text-decoration: line-through;
-      color: #999;
-    }
-
-    .edit-input {
-      flex: 1;
-      padding: 8px;
-      font-size: 16px;
-      border: 2px solid #667eea;
-      border-radius: 4px;
-      outline: none;
-    }
-
-    .button-group {
-      display: flex;
-      gap: 8px;
-    }
-
-    button {
-      padding: 6px 12px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-      transition: background 0.2s;
-    }
-
-    .edit-btn {
-      background: #4CAF50;
-      color: white;
-    }
-
-    .edit-btn:hover {
-      background: #45a049;
-    }
-
-    .delete-btn {
-      background: #f44336;
-      color: white;
-    }
-
-    .delete-btn:hover {
-      background: #da190b;
-    }
-
-    .save-btn {
-      background: #2196F3;
-      color: white;
-    }
-
-    .save-btn:hover {
-      background: #0b7dda;
-    }
-
-    .cancel-btn {
-      background: #757575;
-      color: white;
-    }
-
-    .cancel-btn:hover {
-      background: #616161;
-    }
-  `;
+  static styles = unsafeCSS(styles);
 
   constructor() {
     super();

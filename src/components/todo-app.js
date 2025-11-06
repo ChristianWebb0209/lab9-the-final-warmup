@@ -1,8 +1,9 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import { TodoModel } from '../models/todo-model.js';
 import { StorageService } from '../services/storage-service.js';
 import './todo-form.js';
 import './todo-list.js';
+import styles from '../styles.css?raw';
 
 /**
  * TodoApp - Main application component
@@ -13,110 +14,7 @@ export class TodoApp extends LitElement {
     todos: { state: true }
   };
 
-  static styles = css`
-    :host {
-      display: block;
-    }
-
-    .app-container {
-      background: white;
-      border-radius: 16px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-      padding: 32px;
-      min-height: 400px;
-    }
-
-    h1 {
-      margin: 0 0 8px 0;
-      color: #333;
-      font-size: 32px;
-      font-weight: 700;
-    }
-
-    .subtitle {
-      color: #666;
-      margin-bottom: 24px;
-      font-size: 14px;
-    }
-
-    .stats {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px;
-      background: #f5f5f5;
-      border-radius: 8px;
-      margin-bottom: 20px;
-    }
-
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .stat-value {
-      font-size: 24px;
-      font-weight: 700;
-      color: #667eea;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: #666;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 20px;
-    }
-
-    button {
-      flex: 1;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .clear-completed {
-      background: #ff9800;
-      color: white;
-    }
-
-    .clear-completed:hover {
-      background: #f57c00;
-    }
-
-    .clear-all {
-      background: #f44336;
-      color: white;
-    }
-
-    .clear-all:hover {
-      background: #da190b;
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .footer {
-      margin-top: 20px;
-      padding-top: 20px;
-      border-top: 1px solid #e0e0e0;
-      text-align: center;
-      color: #666;
-      font-size: 12px;
-    }
-  `;
+  static styles = unsafeCSS(styles);
 
   constructor() {
     super();

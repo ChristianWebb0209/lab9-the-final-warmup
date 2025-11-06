@@ -1,5 +1,6 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, unsafeCSS } from 'lit';
 import './todo-item.js';
+import styles from '../styles.css?raw';
 
 /**
  * TodoList - Displays a list of todos
@@ -9,47 +10,7 @@ export class TodoList extends LitElement {
     todos: { type: Array }
   };
 
-  static styles = css`
-    :host {
-      display: block;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 40px 20px;
-      color: white;
-      font-size: 18px;
-    }
-
-    .empty-icon {
-      font-size: 48px;
-      margin-bottom: 16px;
-    }
-
-    .list-container {
-      max-height: 500px;
-      overflow-y: auto;
-    }
-
-    /* Custom scrollbar */
-    .list-container::-webkit-scrollbar {
-      width: 8px;
-    }
-
-    .list-container::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
-    }
-
-    .list-container::-webkit-scrollbar-thumb {
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 4px;
-    }
-
-    .list-container::-webkit-scrollbar-thumb:hover {
-      background: rgba(255, 255, 255, 0.5);
-    }
-  `;
+  static styles = unsafeCSS(styles);
 
   constructor() {
     super();
