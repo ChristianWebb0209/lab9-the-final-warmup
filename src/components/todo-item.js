@@ -23,6 +23,7 @@ export class TodoItem extends LitElement {
    * Calls toggle-todo custom event when checkbox clicked
    */
   handleToggle() {
+    if (!this.todo) return;
     this.dispatchEvent(new CustomEvent('toggle-todo', {
       detail: { id: this.todo.id },
       bubbles: true,
@@ -34,6 +35,7 @@ export class TodoItem extends LitElement {
    * Calls delete-todo custom event
    */
   handleDelete() {
+    if (!this.todo) return;
     if (confirm('Delete this todo?')) {
       this.dispatchEvent(new CustomEvent('delete-todo', {
         detail: { id: this.todo.id },
@@ -44,22 +46,26 @@ export class TodoItem extends LitElement {
   }
 
   handleEdit() {
+    if (!this.todo) return;
     this.isEditing = true;
     this.editValue = this.todo.text;
+  }
+
+  handleEditInput(e) {
+    this.editValue = e.target.value;
   }
 
   /**
    * Handles saving todo through custom event
    */
   handleSave() {
-    if (this.editValue.trim()) {
-      this.dispatchEvent(new CustomEvent('update-todo', {
-        detail: { id: this.todo.id, text: this.editValue },
-        bubbles: true,
-        composed: true
-      }));
-      this.isEditing = false;
-    }
+    if (!this.todo || !this.editValue.trim()) return;
+    this.dispatchEvent(new CustomEvent('update-todo', {
+      detail: { id: this.todo.id, text: this.editValue },
+      bubbles: true,
+      composed: true
+    }));
+    this.isEditing = false;
   }
 
   handleCancel() {
@@ -87,7 +93,7 @@ export class TodoItem extends LitElement {
             class="edit-input"
             type="text"
             .value=${this.editValue}
-            @input=${(e) => this.editValue = e.target.value}
+            @input=${this.handleEditInput}
             @keydown=${this.handleKeyDown}
             autofocus
           />
@@ -104,18 +110,18 @@ export class TodoItem extends LitElement {
         <input
           type="checkbox"
           class="checkbox"
-          .checked=${this.todo.completed}
+          .checked=${this.todo?.completed || false}
           @change=${this.handleToggle}
           aria-label="Toggle todo"
         />
-        <span class="todo-text ${this.todo.completed ? 'completed' : ''}">
-          ${this.todo.text}
+        <span class="todo-text ${this.todo?.completed ? 'completed' : ''}">
+          ${this.todo?.text || ''}
         </span>
         <div class="button-group">
           <button
             class="edit-btn"
             @click=${this.handleEdit}
-            ?disabled=${this.todo.completed}
+            ?disabled=${this.todo?.completed}
             aria-label="Edit todo">
             Edit
           </button>

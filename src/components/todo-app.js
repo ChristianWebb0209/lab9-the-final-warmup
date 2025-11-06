@@ -21,8 +21,8 @@ export class TodoApp extends LitElement {
    */
   constructor() {
     super();
-    this.storageService = new StorageService();
-    this.model = new TodoModel(this.storageService);
+    const storageService = new StorageService();
+    this.model = new TodoModel(storageService);
     this.todos = this.model.todos;
 
     // Subscribe to model changes

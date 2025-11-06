@@ -12,13 +12,13 @@ export class StorageService {
 
   /**
    * Saves a key / data pair to local storage 
-   * @param {string} k - key name
-   * @param {*} d - data to save to storage
+   * @param {string} key - key name
+   * @param {*} data - data to save to storage
    */
-  save(k, d) {
+  save(key, data) {
     try {
-      const fk = `${this.storageKey}_${k}`;
-      localStorage.setItem(fk, JSON.stringify(d));
+      const fullKey = `${this.storageKey}_${key}`;
+      localStorage.setItem(fullKey, JSON.stringify(data));
     } catch (error) {
       console.error('Failed to save to localStorage:', error);
     }
@@ -42,20 +42,20 @@ export class StorageService {
   }
 
   /**
-   * Deletes from storage item with key k
-   * @param {string} k - The key name to remove (will be prefixed with storageKey)
+   * Deletes from storage item with the given key
+   * @param {string} key - The key name to remove (will be prefixed with storageKey)
    */
-  remove(k) {
+  remove(key) {
     try {
-      const fullK = `${this.storageKey}_${k}`;
-      localStorage.removeItem(fullK);
-    } catch (e) {
-      console.error('Failed to remove from localStorage:', e);
+      const fullKey = `${this.storageKey}_${key}`;
+      localStorage.removeItem(fullKey);
+    } catch (error) {
+      console.error('Failed to remove from localStorage:', error);
     }
   }
 
   /**
-   * clears all of storages info going key by key
+   * Clears all storage entries with the storageKey prefix
    */
   clear() {
     try {
