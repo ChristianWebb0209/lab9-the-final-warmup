@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test": "node --test tests/",
+    "test": "node --test tests/*.test.js",
     "lint": "eslint src tests",
     "lint:fix": "eslint src tests --fix",
     "jsdoc:check": "jsdoc -c jsdoc.conf.json --destination ./docs/jsdoc-check 2>&1; exit 0",
