@@ -18,18 +18,126 @@ export class TodoItem extends LitElement {
     super();
     this.isEditing = false;
     this.editValue = '';
+    // changed to using a completed variable to fix the issue with completed not being properly updated
+    this.completed = false;
+  }
+
+  willUpdate(changedProperties) {
+    if (changedProperties.has('todo')) {
+      // sync states
+      this.completed = this.todo?.completed || false;
+    }
+  }
+
+  updated() {
+    // make sure logical state for completed stays updated, this was a bug beforehand
+    if (this.todo && this.completed !== this.todo.completed) {
+      this.completed = this.todo.completed;
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    // for performance and flexibility check every 100ms for updates
+    this._checkInterval = setInterval(() => {
+      if (this.todo && this.completed !== this.todo.completed) {
+        this.completed = this.todo.completed;
+        this.requestUpdate();
+      }
+    }, 100);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    if (this._checkInterval) {
+      // clear the check interval
+      clearInterval(this._checkInterval);
+    }
   }
 
   /**
    * Calls toggle-todo custom event when checkbox clicked
    */
-  handleToggle() {
+  handleToggle(e) {
     if (!this.todo) return;
+    // dont do toggle logic if user clicks on a button or input
+    if (e.target.closest('.button-group') || e.target.closest('.edit-input')) {
+      return;
+    }
+
+    // spawn banana on click
+    this.spawnBanana(e);
+
     this.dispatchEvent(new CustomEvent('toggle-todo', {
       detail: { id: this.todo.id },
       bubbles: true,
       composed: true
     }));
+
+    requestAnimationFrame(() => {
+      // nest in another one, making it wait two frames for added safety (it wasnt working because it hadnt yet processed toggle)
+      requestAnimationFrame(() => {
+        if (this.todo && this.completed !== this.todo.completed) {
+          this.completed = this.todo.completed;
+          this.requestUpdate();
+        }
+      });
+    });
+  }
+
+  spawnBanana(e) {
+    const banana = document.createElement('img');
+    banana.src = './assets/banana.png';
+    banana.style.position = 'fixed';
+    banana.style.width = '120px';
+    banana.style.height = '120px';
+    banana.style.zIndex = '10000';
+    banana.style.pointerEvents = 'none';
+    banana.style.background = 'transparent';
+
+    const direction = Math.random() > 0.5 ? 1 : -1;
+    const horizontalVelocity = direction * (100 + Math.random() * 100);
+    const verticalVelocity = -150 - Math.random() * 100;
+    const gravity = 500;
+
+    // spawn at center of mouse
+    let x = e.clientX - 60;
+    let y = e.clientY - 60;
+
+    banana.style.left = `${x}px`;
+    banana.style.top = `${y}px`;
+
+    document.body.appendChild(banana);
+    let vx = horizontalVelocity;
+    let vy = verticalVelocity;
+    let rotation = 0;
+    const rotationDirection = Math.random() > 0.5 ? 1 : -1;
+    const rotationSpeed = rotationDirection * 360;
+
+    // i found this part online, works pretty streightforward, no physics just motion
+    let lastTime = performance.now();
+    const animate = (currentTime) => {
+      const deltaTime = (currentTime - lastTime) / 1000;
+      lastTime = currentTime;
+
+      vy += gravity * deltaTime;
+      x += vx * deltaTime;
+      y += vy * deltaTime;
+
+      rotation += rotationSpeed * deltaTime;
+
+      banana.style.left = `${x}px`;
+      banana.style.top = `${y}px`;
+      banana.style.transform = `rotate(${rotation}deg)`;
+
+      if (y < window.innerHeight + 100) {
+        requestAnimationFrame(animate);
+      } else {
+        banana.remove();
+      }
+    };
+
+    requestAnimationFrame(animate);
   }
 
   /**
