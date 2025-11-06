@@ -6,8 +6,7 @@ import './todo-list.js';
 import styles from '../styles.css?raw';
 
 /**
- * TodoApp - Main application component
- * Coordinates between Model and View components
+ * Main app controller component, interfaces between model and view
  */
 export class TodoApp extends LitElement {
   static properties = {
@@ -16,6 +15,10 @@ export class TodoApp extends LitElement {
 
   static styles = unsafeCSS(styles);
 
+  /**
+   * Initializes the app with storage service and model.
+   * Subscribes to model changes to keep the UI in sync.
+   */
   constructor() {
     super();
     this.storageService = new StorageService();
@@ -28,18 +31,30 @@ export class TodoApp extends LitElement {
     });
   }
 
+  /**
+   * @param {CustomEvent} e - Event with todo text in e.detail.text
+   */
   handleAddTodo(e) {
     this.model.addTodo(e.detail.text);
   }
 
+  /**
+   * @param {CustomEvent} e - Event with todo id in e.detail.id
+   */
   handleToggleTodo(e) {
     this.model.toggleComplete(e.detail.id);
   }
 
+  /**
+   * @param {CustomEvent} e - Event with todo id in e.detail.id
+   */
   handleDeleteTodo(e) {
     this.model.deleteTodo(e.detail.id);
   }
 
+  /**
+   * @param {CustomEvent} e - Event with todo id and text in e.detail
+   */
   handleUpdateTodo(e) {
     this.model.updateTodo(e.detail.id, e.detail.text);
   }

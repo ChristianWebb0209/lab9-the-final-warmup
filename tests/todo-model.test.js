@@ -47,7 +47,3 @@ test('TodoModel - should not add empty todos', () => {
 
   assert.strictEqual(model.todos.length, 0);
 });
-
-/* so few tests! I guess you can say you have testing, but it isn't meaningful.
-   Also where are our end to end tests!?! */
-

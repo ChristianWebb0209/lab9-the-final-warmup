@@ -2,7 +2,7 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import styles from '../styles.css?raw';
 
 /**
- * TodoForm - Input form for adding new todos
+ * Form component for user to add a new todos
  */
 export class TodoForm extends LitElement {
   static properties = {
@@ -16,6 +16,10 @@ export class TodoForm extends LitElement {
     this.inputValue = '';
   }
 
+  /**
+   * Handles form submission
+   * @param {Event} e - Submit event for form
+   */
   handleSubmit(e) {
     e.preventDefault();
     const text = this.inputValue.trim();

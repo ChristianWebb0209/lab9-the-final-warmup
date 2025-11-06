@@ -2,7 +2,7 @@ import { LitElement, html, unsafeCSS } from 'lit';
 import styles from '../styles.css?raw';
 
 /**
- * TodoItem - Individual todo item component
+ * Single todo item that handles editing and deleting.
  */
 export class TodoItem extends LitElement {
   static properties = {
@@ -19,6 +19,9 @@ export class TodoItem extends LitElement {
     this.editValue = '';
   }
 
+  /**
+   * Calls toggle-todo custom event when checkbox clicked
+   */
   handleToggle() {
     this.dispatchEvent(new CustomEvent('toggle-todo', {
       detail: { id: this.todo.id },
@@ -27,6 +30,9 @@ export class TodoItem extends LitElement {
     }));
   }
 
+  /**
+   * Calls delete-todo custom event
+   */
   handleDelete() {
     if (confirm('Delete this todo?')) {
       this.dispatchEvent(new CustomEvent('delete-todo', {
@@ -42,6 +48,9 @@ export class TodoItem extends LitElement {
     this.editValue = this.todo.text;
   }
 
+  /**
+   * Handles saving todo through custom event
+   */
   handleSave() {
     if (this.editValue.trim()) {
       this.dispatchEvent(new CustomEvent('update-todo', {
@@ -58,6 +67,10 @@ export class TodoItem extends LitElement {
     this.editValue = '';
   }
 
+  /**
+   * Handles saving or canceling based on Enter or Esc key pressed down
+   * @param {KeyboardEvent} e
+   */
   handleKeyDown(e) {
     if (e.key === 'Enter') {
       this.handleSave();

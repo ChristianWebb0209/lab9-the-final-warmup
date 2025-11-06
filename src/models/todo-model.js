@@ -1,8 +1,11 @@
 /**
- * TodoModel - Manages the todo list data and business logic
- * Implements the Observer pattern for reactive updates
+ * Manages the todo list data and business logic.
+ * Implements the Observer pattern for reactive updates.
  */
 export class TodoModel {
+  /**
+   * @param {StorageService} storageService - The storage service instance
+   */
   constructor(storageService) {
     this.storage = storageService;
     this.todos = this.storage.load('items', []);
@@ -11,21 +14,21 @@ export class TodoModel {
   }
 
   /**
-   * Subscribe to model changes
+   * @param {Function} listener - Callback function called on model changes
    */
   subscribe(listener) {
     this.listeners.push(listener);
   }
 
   /**
-   * Notify all subscribers of changes
+   * Notifies all subscribed listeners of state changes.
    */
   notify() {
     this.listeners.forEach(listener => listener());
   }
 
   /**
-   * Add a new todo
+   * @param {string} text - The text content of the todo item
    */
   addTodo(text) {
     if (!text || text.trim() === '') {
@@ -45,7 +48,7 @@ export class TodoModel {
   }
 
   /**
-   * Toggle todo completion status
+   * @param {number} id - The unique identifier of the todo item
    */
   toggleComplete(id) {
     const todo = this.todos.find(t => t.id === id);
@@ -57,7 +60,7 @@ export class TodoModel {
   }
 
   /**
-   * Delete a todo
+   * @param {number} id - The unique identifier of the todo item
    */
   deleteTodo(id) {
     this.todos = this.todos.filter(t => t.id !== id);
@@ -66,7 +69,8 @@ export class TodoModel {
   }
 
   /**
-   * Update todo text
+   * @param {number} id - The unique identifier of the todo item
+   * @param {string} newText - The new text content for the todo
    */
   updateTodo(id, newText) {
     const todo = this.todos.find(t => t.id === id);
@@ -77,40 +81,35 @@ export class TodoModel {
     }
   }
 
-  /**
-   * Clear all completed todos
-   */
   clearCompleted() {
     this.todos = this.todos.filter(t => !t.completed);
     this.save();
     this.notify();
   }
 
-  /**
-   * Clear all todos
-   */
   clearAll() {
     this.todos = [];
-    this.save();
+    this.nextId = 1;
+    this.storage.clear();
     this.notify();
   }
 
   /**
-   * Get count of active todos
+   * @returns {number} num of incomplete todos
    */
   get activeCount() {
     return this.todos.filter(t => !t.completed).length;
   }
 
   /**
-   * Get count of completed todos
+   * @returns {number} num of completed todos
    */
   get completedCount() {
     return this.todos.filter(t => t.completed).length;
   }
 
   /**
-   * Save todos to storage
+   * Saves current state to storage
    */
   save() {
     this.storage.save('items', this.todos);

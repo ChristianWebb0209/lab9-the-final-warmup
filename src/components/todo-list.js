@@ -3,7 +3,8 @@ import './todo-item.js';
 import styles from '../styles.css?raw';
 
 /**
- * TodoList - Displays a list of todos
+ * Component that displays a list of todo items.
+ * Shows empty state when no todos are present.
  */
 export class TodoList extends LitElement {
   static properties = {

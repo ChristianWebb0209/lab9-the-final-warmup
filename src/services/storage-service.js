@@ -1,13 +1,19 @@
 /**
- * StorageService - Handles localStorage operations for the TODO app
+ * Handles all storage as JSON using key 'todos'
  */
 export class StorageService {
+  /**
+   * @param {string} [storageKey='todos'] - default storageKey is 'todos'
+   */
   constructor(storageKey = 'todos') {
+    /** @type {string} */
     this.storageKey = storageKey;
   }
 
   /**
-   * Save data to localStorage
+   * Saves a key / data pair to local storage 
+   * @param {string} k - key name
+   * @param {*} d - data to save to storage
    */
   save(k, d) {
     try {
@@ -19,7 +25,10 @@ export class StorageService {
   }
 
   /**
-   * Load data from localStorage
+   * Loads from localStorage based on a key, returns null if nothing found
+   * @param {string} key - key name
+   * @param {*} [defaultValue=null] - default return null if don't find in storage
+   * @returns {*} object obtained from localStorage
    */
   load(key, defaultValue = null) {
     try {
@@ -33,7 +42,8 @@ export class StorageService {
   }
 
   /**
-   * Remove data from localStorage
+   * Deletes from storage item with key k
+   * @param {string} k - The key name to remove (will be prefixed with storageKey)
    */
   remove(k) {
     try {
@@ -45,7 +55,7 @@ export class StorageService {
   }
 
   /**
-   * Clear all data for this app
+   * clears all of storages info going key by key
    */
   clear() {
     try {
